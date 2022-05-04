@@ -3,7 +3,7 @@ name: Dev build
 on:
   pull_request:
     branches:
-      - pr-build
+      - master
 
 jobs:
   build:
