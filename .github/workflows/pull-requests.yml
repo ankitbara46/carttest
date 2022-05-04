@@ -1,0 +1,34 @@
+name: Dev build
+
+on:
+  pull_request:
+    branches:
+      - pr-build
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    environment: 
+      name: development   
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          registry-url: https://npm.pkg.github.com
+          scope: '@byjutech'
+          always-auth: true
+      - uses: c-hive/gha-npm-cache@v1
+      - name: NPM install
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
+      - name: NPM build
+        run: npm run build
+        env:
+          PUBLIC_URL: /
+          NODE_ENV: development
+          BUILD_ENV: devtest
