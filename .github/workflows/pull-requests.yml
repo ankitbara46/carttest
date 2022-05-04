@@ -3,7 +3,7 @@ name: Dev build
 on:
   pull_request:
     branches:
-      - pr-build
+      - master
 
 jobs:
   build:
@@ -19,8 +19,6 @@ jobs:
         with:
           node-version: 12.x
           registry-url: https://npm.pkg.github.com
-          scope: '@byjutech'
-          always-auth: true
       - uses: c-hive/gha-npm-cache@v1
       - name: NPM install
         run: npm ci
